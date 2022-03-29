@@ -1,43 +1,43 @@
 @font-face {
   font-family: akzidenz-grotesk;
-  src: url("assets/typefaces/Akzidenz-grotesk-roman_0.ttf");
+  src: url("./typefaces/Akzidenz-grotesk-roman_0.ttf");
 }
 
 @font-face {
   font-family: akzidenz-grotesk;
   font-weight: 700;
-  src: url("assets/typefaces/Akzidenz-grotesk-bold_0.ttf");
+  src: url("./typefaces/Akzidenz-grotesk-bold_0.ttf");
 }
 
 @font-face {
   font-family: akzidenz-grotesk;
   font-weight: 900;
-  src: url("assets/typefaces/Akzidenz-grotesk-black_0.ttf");
+  src: url("./typefaces/Akzidenz-grotesk-black_0.ttf");
 }
 
 @font-face {
   font-family: akzidenz-grotesk;
   font-weight: 300;
-  src: url("assets/typefaces/Akzidenz-grotesk-light_0.ttf");
+  src: url("./typefaces/Akzidenz-grotesk-light_0.ttf");
 }
 
 @font-face {
   font-family: garamond;
   font-weight: 500;
-  src: url("assets/typefaces/GARA.TTF");
+  src: url("./typefaces/GARA.TTF");
 }
 
 @font-face {
   font-family: garamond;
   font-weight: 700;
-  src: url("assets/typefaces/GARABD.TTF");
+  src: url("./typefaces/GARABD.TTF");
 }
 
 @font-face {
   font-family: garamond;
   font-weight: 500;
   font-style: italic;
-  src: url("assets/typefaces/GARAIT.TTF");
+  src: url("./typefaces/GARAIT.TTF");
 }
 
 ::selection {
@@ -56,7 +56,7 @@ body {
 
   background-color: black;
 
-  line-height: 18pt;
+  line-height: 14pt;
 
   overflow: hidden;
 }
@@ -142,7 +142,7 @@ a:hover {
   font-family: serifakzidenz-grotesk;
 
   font-weight: 500;
-  font-size: 18pt;
+  font-size: 14pt;
 
   transform-style: preserve-3d;
 
@@ -355,7 +355,7 @@ a:hover {
   display: inline-block;
 
   font-weight: 900;
-  font-size: 18pt;
+  font-size: 14pt;
 
   width: auto;
 
@@ -367,8 +367,6 @@ a:hover {
   transition: all 0.5s;
 
   width: auto;
-
-  font-family: icons;
 }
 
 .uibutton:hover p {
