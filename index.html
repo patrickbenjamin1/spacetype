@@ -1,6 +1,6 @@
 <html>
 
-	<!--
+<!--
 
 	    ___     ___    ____
 		|  |    |  |   |   |
@@ -13,822 +13,890 @@
 
 	-->
 
-	<head>
-		<title>Space Type</title>
+<head>
+	<title>Space Type</title>
 
-		<meta charset="utf-8">
+	<meta charset="utf-8">
 
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	 	<link rel="stylesheet" type="text/css" href="styles.css">
+	 
+	<link rel="stylesheet" type="text/css" href="styles.css">
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
-		<script type="text/javascript">
+	<script type="text/javascript">
 
-			var frame = 0;
+		var frame = 0;
 
-			var pause = false;
+		var pause = false;
 
-			function initiatecirclepathrepeating( $object, numberofincrements ){
+		function initiatecirclepathrepeating($object, numberofincrements) {
 
-				//GET PARENT
+			//GET PARENT
 
-				var $parent = $object.parent();
+			var $parent = $object.parent();
 
-				//PREP VARIABLES FOR PATH INSTANCES
+			//PREP VARIABLES FOR PATH INSTANCES
 
-				var objectcontents = $object.html();
-				var objectclass = $object.attr('id') + 'circlepath ' + $object.attr('id') + ' circlepath';
-				var pathclass = $object.attr('id') + 'circlepath';
+			var objectcontents = $object.html();
+			var objectclass = $object.attr('id') + 'circlepath ' + $object.attr('id') + ' circlepath';
+			var pathclass = $object.attr('id') + 'circlepath';
 
-				//CLEAR ANY POTENTIAL EARLIER ONES
+			//CLEAR ANY POTENTIAL EARLIER ONES
 
-				$('.' + pathclass).remove();
+			$('.' + pathclass).remove();
 
-				//GET CENTRE
+			//GET CENTRE
 
-				var xpos = 50;
-				var ypos = 50;
+			var xpos = 50;
+			var ypos = 50;
 
-				//CREATE PATH INSTANCES
+			//CREATE PATH INSTANCES
 
-				for( var i = 0; i < numberofincrements; i++ )
-				{					
+			for (var i = 0; i < numberofincrements; i++) {
 
-					$parent.append('<div class = "' + objectclass + '">' + objectcontents + '</div>');
+				$parent.append('<div class = "' + objectclass + '">' + objectcontents + '</div>');
 
-					$('.' + pathclass).last().css({'left':xpos + '%', 'top': ypos + '%'});
-
-				}
-
-				$('.' + pathclass).css({'opacity':'1', 'transform':'scale(0)'});
-				$('.' + pathclass).css({'transition':'opacity 0.5s'});
-
-				//CLEAR ORIGINAL
-
-				$object.css({'display':'none'});
-
-				if ($parent.css('position') == 'static')
-				{
-
-					$parent.css({'position':'relative'});
-
-				}
+				$('.' + pathclass).last().css({ 'left': xpos + '%', 'top': ypos + '%' });
 
 			}
 
-			var zindexofcirclepath = 1;
+			$('.' + pathclass).css({ 'opacity': '1', 'transform': 'scale(0)' });
+			$('.' + pathclass).css({ 'transition': 'opacity 0.5s' });
 
-			var framenumbers = [];
+			//CLEAR ORIGINAL
 
-			var setintervals= [];
+			$object.css({ 'display': 'none' });
 
-			function animatecirclepath(id, framerate, radius, angle, yamplitude, scaleamplitude)
-			{
+			if ($parent.css('position') == 'static') {
 
-				var instances = $('.' + id + 'circlepath').length;
-
-				var length = $('.' + id + 'circlepath').length;
-
-				var indexofclass = parseInt( id.replace('orbititem', '') );
-
-				framenumbers.push(0);
-
-				var framelength = 1000 / framerate;
-
-				setintervals[newindex] = setInterval(function(){
-
-					$('.' + id + 'circlepath').each(function(index){
-
-						animatecirclepathinstance($(this), index, framelength, instances, radius, angle, yamplitude, scaleamplitude, indexofclass);
-
-					});
-
-					if (!pause)
-					{
-
-						
-
-						framenumbers[indexofclass] += 0.4 * $('#speedinput input').val();
-
-					}
-
-				}, framelength);
+				$parent.css({ 'position': 'relative' });
 
 			}
 
-			function animatecirclepathinstance($object, index, framelength, totalinstances, radius, angle, yamplitude, scaleamplitude, indexofclass)
-			{
+		}
 
-				var theta = ( 360 / totalinstances ) * index + ( framenumbers[indexofclass] );
+		var zindexofcirclepath = 1;
 
-				var posx = Math.cos( theta * ( Math.PI / 180 ) ) * radius;
-				var posz = Math.sin( theta * ( Math.PI / 180 ) ) * radius;
-				var posy = Math.sin( index + (framenumbers[indexofclass] / 3) ) * yamplitude;
+		var framenumbers = [];
 
-				var scale = 1 + ( Math.sin( (framenumbers[indexofclass] + (index * 2) / 5 ) * 0.5 ) * scaleamplitude );
+		var setintervals = [];
 
-				scale + scaleamplitude;
+		function animatecirclepath(id, framerate, radius, angle, yamplitude, scaleamplitude) {
 
-				var transform = 'translateX(' + posx + 'px) translateY( ' + posy + 'px) translateZ(' + posz + 'px) scale(' + scale + ') rotateZ(' + angle + 'deg)'; 
+			var instances = $('.' + id + 'circlepath').length;
 
-				$object.css({'transform': transform});
+			var length = $('.' + id + 'circlepath').length;
 
-			}
+			var indexofclass = parseInt(id.replace('orbititem', ''));
 
-			var animatingheader = false;
-			var newindex = 0;
+			framenumbers.push(0);
 
-			var rotateX = 0;
-			var rotateY = 0;
-			var rotateZ = 0;
-			var moveX = 0;
-			var moveY = 0;
-			var scale = 1;
+			var framelength = 1000 / framerate;
 
-			function doWorldTransforms()
-			{
+			setintervals[newindex] = setInterval(function () {
 
-				rotateX = $('#rotateXinput input').val();
-				rotateY = $('#rotateYinput input').val();
-				rotateZ = $('#rotateZinput input').val();
+				$('.' + id + 'circlepath').each(function (index) {
 
-				moveX = $('#moveXinput input').val();
-				moveY = $('#moveYinput input').val();
+					animatecirclepathinstance($(this), index, framelength, instances, radius, angle, yamplitude, scaleamplitude, indexofclass);
 
-				scale = $('#scaleinput input').val();
-
-				$('#orbitwrapper').css({'transform':'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) rotateZ(' + rotateZ + 'deg)'});
-
-				$('#header').css({'transform':'scale(' + scale / 2 + ') translateX(' + moveX + 'px) translateY(' + moveY + 'px)'});
-
-				$('#centre').css({'transform':'rotateX(' + -rotateX + 'deg) rotateY(' + -rotateY + 'deg) rotateZ(' + -rotateZ + 'deg)'});
-
-			}
-
-			var panelopen = false;
-
-			function addObject(){
-
-				if ( $('#typeinput select').val() == 'text' )
-				{
-
-					$('#orbitwrapper').append(
-
-						'<div id="orbititem' + newindex + '"> <p>' + $('#textvalueinput input').val() + '</p></div>'
-
-						);
-
-					initiatecirclepathrepeating( $('#orbititem' + newindex), $('#instancesinput input').val() );
-					animatecirclepath('orbititem' + newindex, 15, $('#radiusinput input').val(), $('#angleinput input').val(), $('#yamplitudeinput input').val(), $('#scaleamplitudeinput input').val());
-
-					$('.orbititem' + newindex + 'circlepath').css({'font-size': $('#textsizeinput input').val() + 'pt', 'font-family': $('#typefaceinput select').val(), 'color': $('#colourinput input').val()})
-
-					$('.orbititem' + newindex + 'circlepath').css({'left':'calc(50% - ' + $('.orbititem' + newindex + 'circlepath').width() / 2 + 'px)', 'top':'calc(50% - ' + $('.orbititem' + newindex + 'circlepath').height() / 2 + 'px)'})
-
-				}
-
-				else if ( $('#typeinput select').val() == 'circle' )
-				{
-
-					$('#orbitwrapper').append(
-
-						'<div id="orbititem' + newindex + '"></div>'
-
-						);
-
-					initiatecirclepathrepeating( $('#orbititem' + newindex), $('#instancesinput input').val() );
-					animatecirclepath('orbititem' + newindex, 15, $('#radiusinput input').val(), $('#angleinput input').val(), $('#yamplitudeinput input').val(), $('#scaleamplitudeinput input').val());
-
-					$('.orbititem' + newindex + 'circlepath').css({'background-color': $('#colourinput input').val(), 'width': $('#circlesizeinput input').val(), 'height': $('#circlesizeinput input').val(), 'border-radius': '50%'});
-
-					$('.orbititem' + newindex + 'circlepath').css({'left':'calc(50% - ' + $('.orbititem' + newindex + 'circlepath').width() / 2 + 'px)', 'top':'calc(50% - ' + $('.orbititem' + newindex + 'circlepath').height() / 2 + 'px)'})
-
-					if ( $('#circletypeinput select').val() != 'filled' )
-					{
-
-						$('.orbititem' + newindex + 'circlepath').css({'background-color': 'transparent', 'border':$('#borderthicknessinput input').val() + 'px solid ' + $('#colourinput input').val()});
-
-					
-						if ( $('#circletypeinput select').val() == 'border dashed' )
-						{
-
-							$('.orbititem' + newindex + 'circlepath').css({'border-style':'dashed'});
-
-						}
-
-						else if ( $('#circletypeinput select').val() == 'border dotted' )
-						{
-
-							$('.orbititem' + newindex + 'circlepath').css({'border-style':'dotted'});
-
-						}
-
-					}
-
-				}
-
-
-				newindex++;
-
-				undoindex = newindex;
-
-			}
-
-			$(document).ready(function(){
-
-				var timeout = null;
-
-				$('body').on('mousemove', function() {
-				    
-				    clearTimeout(timeout);
-		        	$('body').css({'cursor': 'default'});
-
-		        	if (!panelopen)
-		        	{
-        				$('#openpanels').css({'opacity':'1'});
-        				$('#link').css({'opacity':'1'});
-
-        			}
-
-				    timeout = setTimeout(function() {
-
-				    	if (!panelopen)
-				    	{
-
-		        			$('body').css({'cursor': 'none'});
-
-		        			$('#openpanels').css({'opacity':'0'});
-		        			$('#link').css({'opacity':'0'});
-
-				    	}
-
-				    }, 1000);
 				});
 
-				addObject();
+				if (!pause) {
 
-				$('#orbititem' + newindex ).css({'display':'none'});
+
+
+					framenumbers[indexofclass] += 0.4 * $('#speedinput input').val();
+
+				}
+
+			}, framelength);
+
+		}
+
+		function animatecirclepathinstance($object, index, framelength, totalinstances, radius, angle, yamplitude, scaleamplitude, indexofclass) {
+
+			var theta = (360 / totalinstances) * index + (framenumbers[indexofclass]);
+
+			var posx = Math.cos(theta * (Math.PI / 180)) * radius;
+			var posz = Math.sin(theta * (Math.PI / 180)) * radius;
+			var posy = Math.sin(index + (framenumbers[indexofclass] / 3)) * yamplitude;
+
+			var scale = 1 + (Math.sin((framenumbers[indexofclass] + (index * 2) / 5) * 0.5) * scaleamplitude);
+
+			scale + scaleamplitude;
+
+			var transform = 'translateX(' + posx + 'px) translateY( ' + posy + 'px) translateZ(' + posz + 'px) scale(' + scale + ') rotateZ(' + angle + 'deg)';
+
+			$object.css({ 'transform': transform });
+
+		}
+
+		var animatingheader = false;
+		var newindex = 0;
+
+		var rotateX = 0;
+		var rotateY = 0;
+		var rotateZ = 0;
+		var moveX = 0;
+		var moveY = 0;
+		var scale = 1;
+
+		function doWorldTransforms() {
+
+			rotateX = $('#rotateXinput input').val();
+			rotateY = $('#rotateYinput input').val();
+			rotateZ = $('#rotateZinput input').val();
+
+			moveX = $('#moveXinput input').val();
+			moveY = $('#moveYinput input').val();
+
+			scale = $('#scaleinput input').val();
+
+			$('#orbitwrapper').css({ 'transform': 'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) rotateZ(' + rotateZ + 'deg)' });
+
+			$('#header').css({ 'transform': 'scale(' + scale / 2 + ') translateX(' + moveX + 'px) translateY(' + moveY + 'px)' });
+
+			$('#centre').css({ 'transform': 'rotateX(' + -rotateX + 'deg) rotateY(' + -rotateY + 'deg) rotateZ(' + -rotateZ + 'deg)' });
+
+		}
+
+		var panelopen = false;
+
+		function addObject() {
+
+			if ($('#typeinput select').val() == 'text') {
+
+				$('#orbitwrapper').append(
+
+					'<div id="orbititem' + newindex + '"> <p>' + $('#textvalueinput input').val() + '</p></div>'
+
+				);
+
+				initiatecirclepathrepeating($('#orbititem' + newindex), $('#instancesinput input').val());
+				animatecirclepath('orbititem' + newindex, 15, $('#radiusinput input').val(), $('#angleinput input').val(), $('#yamplitudeinput input').val(), $('#scaleamplitudeinput input').val());
+
+				$('.orbititem' + newindex + 'circlepath').css({ 'font-size': $('#textsizeinput input').val() + 'pt', 'font-family': $('#typefaceinput select').val(), 'color': $('#colourinput input').val() })
+
+				$('.orbititem' + newindex + 'circlepath').css({ 'left': 'calc(50% - ' + $('.orbititem' + newindex + 'circlepath').width() / 2 + 'px)', 'top': 'calc(50% - ' + $('.orbititem' + newindex + 'circlepath').height() / 2 + 'px)' })
+
+			}
+
+			else if ($('#typeinput select').val() == 'circle') {
+
+				$('#orbitwrapper').append(
+
+					'<div id="orbititem' + newindex + '"></div>'
+
+				);
+
+				initiatecirclepathrepeating($('#orbititem' + newindex), $('#instancesinput input').val());
+				animatecirclepath('orbititem' + newindex, 15, $('#radiusinput input').val(), $('#angleinput input').val(), $('#yamplitudeinput input').val(), $('#scaleamplitudeinput input').val());
+
+				$('.orbititem' + newindex + 'circlepath').css({ 'background-color': $('#colourinput input').val(), 'width': $('#circlesizeinput input').val(), 'height': $('#circlesizeinput input').val(), 'border-radius': '50%' });
+
+				$('.orbititem' + newindex + 'circlepath').css({ 'left': 'calc(50% - ' + $('.orbititem' + newindex + 'circlepath').width() / 2 + 'px)', 'top': 'calc(50% - ' + $('.orbititem' + newindex + 'circlepath').height() / 2 + 'px)' })
+
+				if ($('#circletypeinput select').val() != 'filled') {
+
+					$('.orbititem' + newindex + 'circlepath').css({ 'background-color': 'transparent', 'border': $('#borderthicknessinput input').val() + 'px solid ' + $('#colourinput input').val() });
+
+
+					if ($('#circletypeinput select').val() == 'border dashed') {
+
+						$('.orbititem' + newindex + 'circlepath').css({ 'border-style': 'dashed' });
+
+					}
+
+					else if ($('#circletypeinput select').val() == 'border dotted') {
+
+						$('.orbititem' + newindex + 'circlepath').css({ 'border-style': 'dotted' });
+
+					}
+
+				}
+
+			}
+
+
+			newindex++;
+
+			undoindex = newindex;
+
+		}
+
+		$(document).ready(function () {
+
+			var timeout = null;
+
+			$('body').on('mousemove', function () {
+
+				clearTimeout(timeout);
+				$('body').css({ 'cursor': 'default' });
+
+				if (!panelopen) {
+					$('#openpanels').css({ 'opacity': '1' });
+					$('#link').css({ 'opacity': '1' });
+
+				}
+
+				timeout = setTimeout(function () {
+
+					if (!panelopen) {
+
+						$('body').css({ 'cursor': 'none' });
+
+						$('#openpanels').css({ 'opacity': '0' });
+						$('#link').css({ 'opacity': '0' });
+
+					}
+
+				}, 1000);
+			});
+
+			addObject();
+
+			$('#orbititem' + newindex).css({ 'display': 'none' });
+
+			doWorldTransforms();
+
+			$('input').on('input', function () {
+
+				$(this).parent().find($('.uiobjectvalue p')).eq(0).html($(this).val());
+
+			});
+
+			$('#typeinput select').change(function () {
+
+				if ($(this).val() == 'text') {
+
+					$('#addtextui').css({ 'display': 'inline' });
+					$('#addcircleui').css({ 'display': 'none' });
+
+				}
+
+				else {
+
+					$('#addtextui').css({ 'display': 'none' });
+					$('#addcircleui').css({ 'display': 'inline' });
+
+				}
+
+			});
+
+			$('#backgroundcolourinput input').on('input', function () {
+
+				$('body').css({ 'background-color': $(this).val() });
+
+				$('<style>::selection{background-color:' + $(this).val() + ';}::-moz-selection{background-color:' + $(this).val() + ';}</style>').insertAfter('body *:last');
+
+			});
+
+			$('#centrecolourinput input').on('input', function () {
+
+				$('#centre').css({ 'background-color': $(this).val() });
+
+			});
+
+			$('#openaddpanel').click(function () {
+
+				$('#addpanel').css({ 'opacity': '1', 'pointer-events': 'all', 'transform': 'none' });
+
+				$('#openpanels').css({ 'opacity': '0', 'pointer-events': 'none' });
+
+				panelopen = true;
+
+			});
+
+			$('#openenvironmentpanel').click(function () {
+
+				$('#environmentpanel').css({ 'opacity': '1', 'pointer-events': 'all', 'transform': 'none' });
+
+				$('#openpanels').css({ 'opacity': '0', 'pointer-events': 'none' });
+
+				panelopen = true;
+
+			});
+
+			$('.closeuipanel').click(function () {
+
+				$(this).parent().css({ 'opacity': '0', 'pointer-events': 'none', 'transform': 'translateY(200px)' });
+
+				$('#openpanels').css({ 'opacity': '1', 'pointer-events': 'all' });
+
+				panelopen = false;
+
+			});
+
+			$('#pausebutton').click(function () {
+
+				pause = !pause;
+
+				if (pause) {
+
+					$('#pausebutton1').css({ 'display': 'none' });
+					$('#pausebutton2').css({ 'display': 'inline' });
+
+				}
+
+				else {
+
+					$('#pausebutton1').css({ 'display': 'inline' });
+					$('#pausebutton2').css({ 'display': 'none' });
+
+				}
+
+			})
+
+			$('#rotateXinput input').on('input', function () {
 
 				doWorldTransforms();
 
-				$('input').on('input', function(){
+			});
 
-					$(this).parent().find( $('.uiobjectvalue p') ).eq(0).html( $(this).val() );
+			$('#rotateYinput input').on('input', function () {
 
-				});
-
-				$('#typeinput select').change(function(){
-
-					if ($(this).val() == 'text')
-					{
-
-						$('#addtextui').css({'display':'inline'});
-						$('#addcircleui').css({'display':'none'});
-
-					}
-
-					else
-					{
-
-						$('#addtextui').css({'display':'none'});
-						$('#addcircleui').css({'display':'inline'});
-
-					}
-
-				});
-
-				$('#backgroundcolourinput input').on('input', function(){
-
-					$('body').css({'background-color': $(this).val() });
-
-					$('<style>::selection{background-color:' + $(this).val() + ';}::-moz-selection{background-color:' + $(this).val() + ';}</style>').insertAfter('body *:last');
-
-				});
-
-				$('#centrecolourinput input').on('input', function(){
-
-					$('#centre').css({'background-color': $(this).val() });
-
-				});
-
-				$('#openaddpanel').click(function(){
-
-					$('#addpanel').css({'opacity':'1', 'pointer-events':'all', 'transform':'none'});
-
-					$('#openpanels').css({'opacity':'0', 'pointer-events':'none'});
-
-					panelopen = true;
-
-				});
-
-				$('#openenvironmentpanel').click(function(){
-
-					$('#environmentpanel').css({'opacity':'1', 'pointer-events':'all', 'transform':'none'});
-
-					$('#openpanels').css({'opacity':'0', 'pointer-events':'none'});
-
-					panelopen = true;
-
-				});
-
-				$('.closeuipanel').click(function(){
-
-					$(this).parent().css({'opacity':'0', 'pointer-events':'none','transform':'translateY(200px)'});
-
-					$('#openpanels').css({'opacity':'1', 'pointer-events': 'all'});
-
-					panelopen = false;
-
-				});
-
-				$('#pausebutton').click(function(){
-
-					pause = !pause;
-
-					if (pause)
-					{
-
-						$('#pausebutton1').css({'display':'none'});
-						$('#pausebutton2').css({'display':'inline'});
-
-					}
-
-					else
-					{
-
-						$('#pausebutton1').css({'display':'inline'});
-						$('#pausebutton2').css({'display':'none'});						
-
-					}
-
-				})
-
-				$('#rotateXinput input').on('input', function(){
-
-					doWorldTransforms();
-
-				});
-
-				$('#rotateYinput input').on('input', function(){
-
-					doWorldTransforms();
-
-				});
-
-				$('#rotateZinput input').on('input', function(){
-
-					doWorldTransforms();
-
-				});
-
-				$('#moveXinput input').on('input', function(){
-
-					doWorldTransforms();
-
-				});
-
-				$('#moveYinput input').on('input', function(){
-
-					doWorldTransforms();
-
-				});
-
-				$('#scaleinput input').on('input', function(){
-
-					doWorldTransforms();
-
-				});
-
-
-				$('#addbutton').click(function(){
-
-					addObject();
-
-				});
-
-				$('#undobutton').click(function(){
-
-					$('.orbititem' + ( newindex - 1 ) + 'circlepath').remove();
-
-					$('#orbititem' + (newindex - 1 )).remove();
-
-					clearInterval( setintervals[newindex - 1] );
-
-					if(newindex > 0)
-					{
-						newindex--;
-					}
-
-				});
-
-				$('#resetbutton').click(function(){
-
-					for (i = 0; i < newindex ;i++ )
-					{
-
-						$('#orbititem' + i).remove();
-
-						clearInterval( setintervals[i] );
-
-					}
-
-					$('.circlepath').remove();
-
-					newindex = 0;
-
-				});
-
-				$('#resetsettingsbutton').click(function(){
-
-					$('#rotateXinput input').val(-30);
-					$('#rotateXinput .uiobjectvalue p:first').html('-30');
-					$('#rotateYinput input').val(0);
-					$('#rotateYinput .uiobjectvalue p:first').html('0');
-					$('#rotateZinput input').val(-20);
-					$('#rotateZinput .uiobjectvalue p:first').html('-20');	
-
-					$('#moveXinput input').val(0);
-					$('#moveXinput .uiobjectvalue p:first').html('0');
-					$('#moveYinput input').val(0);
-					$('#moveYinput .uiobjectvalue p:first').html('0');
-
-					$('#scaleinput input').val(1);
-					$('#scaleinput .uiobjectvalue p:first').html('1');
-
-					doWorldTransforms();
-
-					$('#speedinput input').val(1);
-					$('#speedinput .uiobjectvalue p:first').html('1');
-
-					$('#backgroundcolourinput input').val('black');
-					$('body').css({'background-color':'black'});
-
-					$('#centrecolourinput input').val('rgb(205,100,100)');
-					$('#centre').css({'background-color':'rgb(205,100,100)'});
-
-
-
-				});
-
-			})
-
-			$(window).on('beforeunload', function(){
-
-				$(window).scrollTop(0);
+				doWorldTransforms();
 
 			});
 
-			$(window).resize(function(){
+			$('#rotateZinput input').on('input', function () {
 
-			})
-
-			var haspassedbreak1 = false;
-
-			$(document).scroll(function(){
+				doWorldTransforms();
 
 			});
 
-		</script>
+			$('#moveXinput input').on('input', function () {
 
-	</head>
+				doWorldTransforms();
 
-	<body>		
+			});
 
-		<div id='wrapper'>
+			$('#moveYinput input').on('input', function () {
 
-			<div id='gethover'></div>
+				doWorldTransforms();
 
-			<div id='header'>
+			});
 
-				<div id='orbitwrapper'>
+			$('#scaleinput input').on('input', function () {
 
-					<div id='centre'>
-						<p></p>
-					</div>
+				doWorldTransforms();
 
+			});
+
+
+			$('#addbutton').click(function () {
+
+				addObject();
+
+			});
+
+			$('#undobutton').click(function () {
+
+				$('.orbititem' + (newindex - 1) + 'circlepath').remove();
+
+				$('#orbititem' + (newindex - 1)).remove();
+
+				clearInterval(setintervals[newindex - 1]);
+
+				if (newindex > 0) {
+					newindex--;
+				}
+
+			});
+
+			$('#resetbutton').click(function () {
+
+				for (i = 0; i < newindex; i++) {
+
+					$('#orbititem' + i).remove();
+
+					clearInterval(setintervals[i]);
+
+				}
+
+				$('.circlepath').remove();
+
+				newindex = 0;
+
+			});
+
+			$('#resetsettingsbutton').click(function () {
+
+				$('#rotateXinput input').val(-30);
+				$('#rotateXinput .uiobjectvalue p:first').html('-30');
+				$('#rotateYinput input').val(0);
+				$('#rotateYinput .uiobjectvalue p:first').html('0');
+				$('#rotateZinput input').val(-20);
+				$('#rotateZinput .uiobjectvalue p:first').html('-20');
+
+				$('#moveXinput input').val(0);
+				$('#moveXinput .uiobjectvalue p:first').html('0');
+				$('#moveYinput input').val(0);
+				$('#moveYinput .uiobjectvalue p:first').html('0');
+
+				$('#scaleinput input').val(1);
+				$('#scaleinput .uiobjectvalue p:first').html('1');
+
+				doWorldTransforms();
+
+				$('#speedinput input').val(1);
+				$('#speedinput .uiobjectvalue p:first').html('1');
+
+				$('#backgroundcolourinput input').val('black');
+				$('body').css({ 'background-color': 'black' });
+
+				$('#centrecolourinput input').val('rgb(205,100,100)');
+				$('#centre').css({ 'background-color': 'rgb(205,100,100)' });
+
+
+
+			});
+
+		})
+
+		$(window).on('beforeunload', function () {
+
+			$(window).scrollTop(0);
+
+		});
+
+		$(window).resize(function () {
+
+		})
+
+		var haspassedbreak1 = false;
+
+		$(document).scroll(function () {
+
+		});
+
+	</script>
+
+</head>
+
+<body>
+
+	<div id='wrapper'>
+
+		<div id='gethover'></div>
+
+		<div id='header'>
+
+			<div id='orbitwrapper'>
+
+				<div id='centre'>
+					<p></p>
 				</div>
 
 			</div>
 
 		</div>
 
-			<div id='openpanels'>
+	</div>
 
-				<div class="uibutton" id="pausebutton" style="width: 20px; padding-left: 0;">
-					<div class='openpanelicon' id="pausebutton1"><p>pause2</p></div>
-					<div class='openpanelicon' id="pausebutton2" style="display: none;"><p>play3</p></div>
-				</div>
+	<div id='openpanels'>
 
-				<div class="openpanelbutton uibutton" id="openaddpanel"">
+		<div class="uibutton" id="pausebutton" style="width: 20px; padding-left: 0;">
+			<div class='openpanelicon' id="pausebutton1">
+				<p>pause2</p>
+			</div>
+			<div class='openpanelicon' id="pausebutton2" style="display: none;">
+				<p>play3</p>
+			</div>
+		</div>
+
+		<div class="openpanelbutton uibutton" id="openaddpanel"">
 					<div class='openpanelicon'><p>plus</p></div>
-					<div class='openpaneltext'><p style="font-family: akzidenz-grotesk;">Add object</p></div>
-				</div>
+					<div class='openpaneltext'><p style=" font-family: akzidenz-grotesk;">Add object</p>
+		</div>
+	</div>
 
 
-				<div class="openpanelbutton uibutton" id="openenvironmentpanel">
-					<div class='openpanelicon'><p>sphere</p></div>
-					<div class='openpaneltext'"><p style="font-family: akzidenz-grotesk;">Environment</p></div>
+	<div class="openpanelbutton uibutton" id="openenvironmentpanel">
+		<div class='openpanelicon'>
+			<p>sphere</p>
+		</div>
+		<div class='openpaneltext'"><p style=" font-family: akzidenz-grotesk;">Environment</p>
+		</div>
+	</div>
+
+	</div>
+
+	<div id='link'>
+		<p style="display: inline-block; margin-right: 20px;">Instagram&mdash;<a
+				href="http://www.instagram.com/spacetype_" target="_blank">spacetype_</a></p>
+
+		<p style="display: inline-block;"> <a href="http://www.patrickbenjam.in" target="_blank">My website.</a></p>
+	</div>
+
+	<div class="uipanel" id="addpanel">
+
+		<div class="uiobject uiobjectmini uibutton noselect closeuipanel" style="width: 100%;">
+
+			<p>cross</p>
+
+		</div>
+
+		<div class="uiobject uiobjectmini" id="radiusinput">
+
+			<div class="uiobjectname">
+				<p>Radius:</p>
+			</div>
+
+			<div class="uiobjectvalue">
+				<p>400</p>
+				<p>px</p>
+			</div>
+
+			<input type='range' min="200" max='1000' step="10" value="400">
+
+		</div>
+
+		<div class="uiobject uiobjectmini" id="instancesinput">
+
+			<div class="uiobjectname">
+				<p>Amount:</p>
+			</div>
+
+			<div class="uiobjectvalue">
+				<p>10</p>
+			</div>
+
+			<input type='range' min="1" max='100' value="10">
+
+		</div>
+
+		<div class="uiobject uiobjectmini" id='angleinput'>
+
+			<div class="uiobjectname">
+				<p>Angle:</p>
+			</div>
+
+			<div class="uiobjectvalue">
+				<p>0</p>
+				<p>deg</p>
+			</div>
+
+			<input type='range' min="-90" max='90' value="0">
+
+		</div>
+
+		<div class="uiobject uiobjectmini" id="yamplitudeinput">
+
+			<div class="uiobjectname">
+				<p>Wave amount:</p>
+			</div>
+
+			<div class="uiobjectvalue">
+				<p>2</p>
+			</div>
+
+			<input type='range' min="0" max='100' value="2">
+
+		</div>
+
+		<div class="uiobject uiobjectmini" id="scaleamplitudeinput">
+
+			<div class="uiobjectname">
+				<p>Scale fluctuate:</p>
+			</div>
+
+			<div class="uiobjectvalue">
+				<p>0.1</p>
+			</div>
+
+			<input type='range' min="0" max='3' step="0.1" value="0.1">
+
+		</div>
+
+		<div class="uiobject uiobjectmini" id="colourinput">
+
+			<div class="uiobjectname">
+				<p>Colour:</p>
+			</div>
+
+			<input type='text' value="white">
+
+		</div>
+
+		<br /><br />
+
+		<div class="uiobject" id="typeinput">
+
+			<p>Type:</p>
+
+			<select name='type'>
+				<option value="text">Text</option>
+				<option value="circle">Circle</option>
+			</select>
+
+		</div>
+
+		<div id='addtextui'>
+
+			<div class="uiobject" id="textvalueinput">
+
+				<div class="uiobjectname">
+					<p>Text:</p>
 				</div>
+
+				<input type='text' min="50" max='900' step="10" value="Hello">
 
 			</div>
 
-			<div id='link'>
-				<p style="display: inline-block; margin-right: 20px;">Instagram&mdash;<a href="http://www.instagram.com/spacetype_" target="_blank">spacetype_</a></p>
+			<div class="uiobject uiobjectmini" id='typefaceinput'>
 
-				<p style="display: inline-block;"> <a href="http://www.patrickbenjam.in" target="_blank">My website.</a></p>
+				<div class="uiobjectname">
+					<p>Typeface:</p>
+				</div>
+
+				<select name='typeface'>
+					<option value="akzidenz-grotesk">Akzidenz Grotesk</option>
+					<option value="garamond">Garamond</option>
+				</select>
+
 			</div>
 
-			<div class="uipanel" id="addpanel">
+			<div class="uiobject uiobjectmini" id="textsizeinput">
 
-				<div class="uiobject uiobjectmini uibutton noselect closeuipanel" style="width: 100%;">
-
-					<p>cross</p>
-
+				<div class="uiobjectname">
+					<p>Size:</p>
 				</div>
 
-				<div class="uiobject uiobjectmini" id="radiusinput">
-
-					<div class="uiobjectname"><p>Radius:</p></div>
-
-					<div class="uiobjectvalue"><p>400</p><p>px</p></div>
-
-					<input type='range' min="200" max='1000' step="10" value="400">
-
+				<div class="uiobjectvalue">
+					<p>10</p>
+					<p>pt</p>
 				</div>
 
-				<div class="uiobject uiobjectmini" id="instancesinput">
+				<input type='range' min="8" max='64' value="10">
 
-					<div class="uiobjectname"><p>Amount:</p></div>
+			</div>
 
-					<div class="uiobjectvalue"><p>10</p></div>
+		</div>
 
-					<input type='range' min="1" max='100' value="10">
+		<div id='addcircleui'>
 
+			<div class="uiobject uiobjectmini" id="circlesizeinput">
+
+				<div class="uiobjectname">
+					<p>Size:</p>
 				</div>
 
-				<div class="uiobject uiobjectmini" id='angleinput'>
-
-					<div class="uiobjectname"><p>Angle:</p></div>
-
-					<div class="uiobjectvalue"><p>0</p><p>deg</p></div>
-
-					<input type='range' min="-90" max='90' value="0">
-
+				<div class="uiobjectvalue">
+					<p>10</p>
+					<p>px</p>
 				</div>
 
-				<div class="uiobject uiobjectmini" id="yamplitudeinput">
+				<input type='range' min="5" max='100' value="10">
 
-					<div class="uiobjectname"><p>Wave amount:</p></div>
+			</div>
 
-					<div class="uiobjectvalue"><p>2</p></div>
+			<div class="uiobject uiobjectmini" id="circletypeinput">
 
-					<input type='range' min="0" max='100' value="2">
-
-				</div>
-
-				<div class="uiobject uiobjectmini" id="scaleamplitudeinput">
-
-					<div class="uiobjectname"><p>Scale fluctuate:</p></div>
-
-					<div class="uiobjectvalue"><p>0.1</p></div>
-
-					<input type='range' min="0" max='3' step="0.1" value="0.1">
-
-				</div>
-
-				<div class="uiobject uiobjectmini" id="colourinput">
-
-					<div class="uiobjectname"><p>Colour:</p></div>
-
-					<input type='text' value="white">
-
-				</div>
-
-				<br/><br/>
-
-				<div class="uiobject" id="typeinput">
-
+				<div class="uiobjectname">
 					<p>Type:</p>
-
-					<select name='type'>
-						<option value="text">Text</option>
-						<option value="circle">Circle</option>
-					</select>
-
 				</div>
 
-				<div id='addtextui'>
-
-					<div class="uiobject" id="textvalueinput">
-
-						<div class="uiobjectname"><p>Text:</p></div>
-
-						<input type='text' min="50" max='900' step="10" value="Hello">
-
-					</div>
-
-					<div class="uiobject uiobjectmini" id='typefaceinput'>
-
-						<div class="uiobjectname"><p>Typeface:</p></div>
-					
-						<select name='typeface'>
-							<option value="akzidenz-grotesk">Akzidenz Grotesk</option>
-							<option value="garamond">Garamond</option>
-						</select>
-
-					</div>
-
-					<div class="uiobject uiobjectmini" id="textsizeinput">
-
-						<div class="uiobjectname"><p>Size:</p></div>
-
-						<div class="uiobjectvalue"><p>10</p><p>pt</p></div>
-
-						<input type='range' min="8" max='64' value="10">
-
-					</div>
-
-				</div>
-
-				<div id='addcircleui'>
-
-					<div class="uiobject uiobjectmini" id="circlesizeinput">
-
-						<div class="uiobjectname"><p>Size:</p></div>
-
-						<div class="uiobjectvalue"><p>10</p><p>px</p></div>
-
-						<input type='range' min="5" max='100' value="10">
-
-					</div>
-
-					<div class="uiobject uiobjectmini" id="circletypeinput">
-
-						<div class="uiobjectname"><p>Type:</p></div>
-
-						<select name='type'>
-							<option value="filled">Filled</option>
-							<option value="border">border</option>
-							<option value="border dotted">border (dotted)</option>
-							<option value="border dashed">border (dashed)</option>
-						</select>
-
-					</div>
-
-					<div class="uiobject uiobjectmini" id="borderthicknessinput">
-
-						<div class="uiobjectname"><p>Border<br/>thickness:</p></div>
-
-						<div class="uiobjectvalue"><p>2</p><p>px</p></div>
-
-						<input type='range' min="1" max='10' value="1" step="0.1">
-
-					</div>
-
-
-				</div>
-
-				<div class="uiobject uiobjectmini uibutton noselect" id="addbutton">
-
-					<p>plus</p>
-
-				</div>
-
-				<div class="uiobject uiobjectmini uibutton noselect" id="undobutton">
-
-					<p>undo</p>
-
-				</div>
-
-				<div class="uiobject uiobjectmini uibutton noselect" id="resetbutton">
-
-					<p>loop2</p>
-
-				</div>
+				<select name='type'>
+					<option value="filled">Filled</option>
+					<option value="border">border</option>
+					<option value="border dotted">border (dotted)</option>
+					<option value="border dashed">border (dashed)</option>
+				</select>
 
 			</div>
 
-			<div class="uipanel" id="environmentpanel">
+			<div class="uiobject uiobjectmini" id="borderthicknessinput">
 
-				<div class="uiobject uiobjectmini uibutton noselect closeuipanel" style="width: 100%;">
-
-					<p>cross</p>
-
+				<div class="uiobjectname">
+					<p>Border<br />thickness:</p>
 				</div>
 
-				<div class="uiobject" id="speedinput">
-
-					<div class="uiobjectname"><p>Speed</div>
-
-					<div class="uiobjectvalue"><p>1</p></div>
-
-					<input type='range' min="0" max='10' value="1" step="0.1" id="speedrange">
-
+				<div class="uiobjectvalue">
+					<p>2</p>
+					<p>px</p>
 				</div>
 
-				<div class="uiheader uiobject">
-					<p>Rotate</p>
-				</div>
-
-				<div class="uiobjectmini uiobject" id="rotateXinput" style="width: 33%">
-
-					<div class="uiobjectname"><p>X</div>
-
-					<div class="uiobjectvalue"><p>-30</p></div>
-
-					<input type='range' min="-40" max='40' value="-30" step="0.1">
-
-				</div>
-
-				<div class="uiobjectmini uiobject" id="rotateYinput" style="width: 33%">
-
-					<div class="uiobjectname"><p>Y</div>
-
-					<div class="uiobjectvalue"><p>0</p></div>
-
-					<input type='range' min="-40" max='40' value="0" step="0.1">
-
-				</div>
-
-				<div class="uiobjectmini uiobject" id="rotateZinput" style="width: 33%">
-
-					<div class="uiobjectname"><p>Z</div>
-
-					<div class="uiobjectvalue"><p>-20</p></div>
-
-					<input type='range' min="-40" max='40' value="-20" step="0.1">
-
-				</div>
-
-				<div class="uiheader uiobject">
-					<p>Move</p>
-				</div>
-
-				<div class="uiobjectmini uiobject" id="moveXinput">
-
-					<div class="uiobjectname"><p>X</div>
-
-					<div class="uiobjectvalue"><p>0</p></div>
-
-					<input type='range' min="-500" max='500' value="0" step="1">
-
-				</div>
-
-				<div class="uiobjectmini uiobject" id="moveYinput">
-
-					<div class="uiobjectname"><p>Y</div>
-
-					<div class="uiobjectvalue"><p>0</p></div>
-
-					<input type='range' min="-500" max='500' value="0" step="1">
-
-				</div>
-
-
-				<div class="uiobject" id="scaleinput">
-
-					<div class="uiobjectname"><p>Scale</p></div>
-
-					<div class="uiobjectvalue"><p>1</p></div>
-
-					<input type='range' min="0" max='2' value="1" step="0.1">
-
-				</div>
-
-				<div class="uiheader uiobject">
-					
-					<p>Colour</p>
-
-				</div>
-
-				<div class="uiobject uiobjectmini" id="backgroundcolourinput">
-
-					<div class="uiobjectname"><p>Background:</p></div>
-
-					<input type='text' value="black">
-
-				</div>
-
-				<div class="uiobject uiobjectmini" id="centrecolourinput">
-
-					<div class="uiobjectname"><p>Centre:</p></div>
-
-					<input type='text' value="rgb(205,100,100)">
-
-				</div>
-
-				<div class="uiobject uiobjectmini uibutton noselect" id="resetsettingsbutton">
-
-					<p>loop2</p>
-
-				</div>
+				<input type='range' min="1" max='10' value="1" step="0.1">
 
 			</div>
 
-		
 
-	</body>
+		</div>
+
+		<div class="uiobject uiobjectmini uibutton noselect" id="addbutton">
+
+			<p>plus</p>
+
+		</div>
+
+		<div class="uiobject uiobjectmini uibutton noselect" id="undobutton">
+
+			<p>undo</p>
+
+		</div>
+
+		<div class="uiobject uiobjectmini uibutton noselect" id="resetbutton">
+
+			<p>loop2</p>
+
+		</div>
+
+	</div>
+
+	<div class="uipanel" id="environmentpanel">
+
+		<div class="uiobject uiobjectmini uibutton noselect closeuipanel" style="width: 100%;">
+
+			<p>cross</p>
+
+		</div>
+
+		<div class="uiobject" id="speedinput">
+
+			<div class="uiobjectname">
+				<p>Speed
+			</div>
+
+			<div class="uiobjectvalue">
+				<p>1</p>
+			</div>
+
+			<input type='range' min="0" max='10' value="1" step="0.1" id="speedrange">
+
+		</div>
+
+		<div class="uiheader uiobject">
+			<p>Rotate</p>
+		</div>
+
+		<div class="uiobjectmini uiobject" id="rotateXinput" style="width: 33%">
+
+			<div class="uiobjectname">
+				<p>X
+			</div>
+
+			<div class="uiobjectvalue">
+				<p>-30</p>
+			</div>
+
+			<input type='range' min="-40" max='40' value="-30" step="0.1">
+
+		</div>
+
+		<div class="uiobjectmini uiobject" id="rotateYinput" style="width: 33%">
+
+			<div class="uiobjectname">
+				<p>Y
+			</div>
+
+			<div class="uiobjectvalue">
+				<p>0</p>
+			</div>
+
+			<input type='range' min="-40" max='40' value="0" step="0.1">
+
+		</div>
+
+		<div class="uiobjectmini uiobject" id="rotateZinput" style="width: 33%">
+
+			<div class="uiobjectname">
+				<p>Z
+			</div>
+
+			<div class="uiobjectvalue">
+				<p>-20</p>
+			</div>
+
+			<input type='range' min="-40" max='40' value="-20" step="0.1">
+
+		</div>
+
+		<div class="uiheader uiobject">
+			<p>Move</p>
+		</div>
+
+		<div class="uiobjectmini uiobject" id="moveXinput">
+
+			<div class="uiobjectname">
+				<p>X
+			</div>
+
+			<div class="uiobjectvalue">
+				<p>0</p>
+			</div>
+
+			<input type='range' min="-500" max='500' value="0" step="1">
+
+		</div>
+
+		<div class="uiobjectmini uiobject" id="moveYinput">
+
+			<div class="uiobjectname">
+				<p>Y
+			</div>
+
+			<div class="uiobjectvalue">
+				<p>0</p>
+			</div>
+
+			<input type='range' min="-500" max='500' value="0" step="1">
+
+		</div>
+
+
+		<div class="uiobject" id="scaleinput">
+
+			<div class="uiobjectname">
+				<p>Scale</p>
+			</div>
+
+			<div class="uiobjectvalue">
+				<p>1</p>
+			</div>
+
+			<input type='range' min="0" max='2' value="1" step="0.1">
+
+		</div>
+
+		<div class="uiheader uiobject">
+
+			<p>Colour</p>
+
+		</div>
+
+		<div class="uiobject uiobjectmini" id="backgroundcolourinput">
+
+			<div class="uiobjectname">
+				<p>Background:</p>
+			</div>
+
+			<input type='text' value="black">
+
+		</div>
+
+		<div class="uiobject uiobjectmini" id="centrecolourinput">
+
+			<div class="uiobjectname">
+				<p>Centre:</p>
+			</div>
+
+			<input type='text' value="rgb(205,100,100)">
+
+		</div>
+
+		<div class="uiobject uiobjectmini uibutton noselect" id="resetsettingsbutton">
+
+			<p>loop2</p>
+
+		</div>
+
+	</div>
+
+
+
+</body>
 
 </html>
