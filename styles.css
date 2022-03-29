@@ -40,13 +40,6 @@
   src: url("assets/typefaces/GARAIT.TTF");
 }
 
-@font-face {
-  font-family: icons;
-  font-weight: 500;
-  font-style: italic;
-  src: url("assets/typefaces/IcoMoon-Free.ttf");
-}
-
 ::selection {
   background-color: white;
 }
@@ -230,14 +223,10 @@ a:hover {
 
 .openpanelicon {
   display: inline-block;
-
-  font-size: 12pt;
 }
 
 .openpaneltext {
   display: inline-block;
-
-  font-size: 12pt;
 }
 
 #link {
@@ -249,8 +238,6 @@ a:hover {
   color: white;
 
   transition: opacity 0.5s;
-
-  font-size: 12pt;
 
   z-index: 9999;
 }
@@ -277,7 +264,7 @@ a:hover {
 
   background-color: rgba(50, 50, 50, 0.5);
 
-  border-radius: 2px;
+  border-radius: 10px;
 
   margin: 20px;
 
@@ -404,34 +391,16 @@ hr {
   transform: translateY(15px);
 }
 
-input[type="text"] {
-  border: 1px solid gray;
-  background-color: transparent;
-  color: white;
+input[type="text"], select {
+  background-color: white;
   font-family: akzidenz-grotesk;
   padding: 10px;
-  border-radius: 2px;
+  border-radius: 9px;
 
   outline: none;
+  border: 0;
 
   margin-top: 5px;
-
-  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
-}
-
-select {
-  margin-top: 5px;
-
-  border: 1px solid gray;
-  background-color: transparent;
-  color: white;
-  font-family: akzidenz-grotesk;
-  padding: 10px 5px;
-  border-radius: 2px;
-
-  outline: none;
-
-  box-shadow: 2px 2px 20px rgba(0, 0, 0, 0.3);
 }
 
 select:active {
